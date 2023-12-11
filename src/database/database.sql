@@ -1,17 +1,9 @@
-CREATE DATABASE IF NOT EXISTS carwash;
-
-USE carwash;
-
---POSIBLES CATEGORIAS DE PRODUCTOS: 
--- F : Filtros
--- A : Aceites
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-12-2023 a las 16:27:54
+-- Tiempo de generación: 11-12-2023 a las 18:15:38
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -28,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `carwash`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `abonos`
+--
+
+CREATE TABLE `abonos` (
+  `id` int(11) NOT NULL,
+  `idPedido` varchar(255) NOT NULL,
+  `monto` double(20,2) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `abonos`
+--
+
+INSERT INTO `abonos` (`id`, `idPedido`, `monto`, `fecha`) VALUES
+(1, 'P-00000001', 100.00, '2023-12-09'),
+(2, 'P-00000001', 10.00, '2023-12-10');
 
 -- --------------------------------------------------------
 
@@ -122,9 +135,29 @@ CREATE TABLE `filtros` (
 -- Volcado de datos para la tabla `filtros`
 --
 
--- INSERT INTO `filtros` (`idProducto`, `tipo`, `marca`, `precioCompra`, `precioVenta`, `modelo_vehiculo`) VALUES
--- ('APUROLATOR-ACEITE', 'Aceite', 'Apurolator', '5.00', '20.00', 'F-50, Hilux, Runner'),
--- ('BOSCH-AIRE', 'Aire', 'BOSCH', '10.00', '20.00', 'Aveo, Fiesta, Optra');
+INSERT INTO `filtros` (`idProducto`, `tipo`, `marca`, `precioCompra`, `precioVenta`, `modelo_vehiculo`) VALUES
+('1', 'Tipo1', 'Marca1', '10.00', '20.00', 'Modelo1'),
+('10', 'Tipo10', 'Marca10', '19.00', '29.00', 'Modelo10'),
+('11', 'Tipo11', 'Marca11', '10.50', '20.50', 'Modelo11'),
+('12', 'Tipo12', 'Marca12', '15.50', '25.50', 'Modelo12'),
+('13', 'Tipo13', 'Marca13', '12.50', '22.50', 'Modelo13'),
+('14', 'Tipo14', 'Marca14', '18.50', '28.50', 'Modelo14'),
+('15', 'Tipo15', 'Marca15', '14.50', '24.50', 'Modelo15'),
+('16', 'Tipo16', 'Marca16', '16.50', '26.50', 'Modelo16'),
+('17', 'Tipo17', 'Marca17', '11.50', '21.50', 'Modelo17'),
+('18', 'Tipo18', 'Marca18', '13.50', '23.50', 'Modelo18'),
+('19', 'Tipo19', 'Marca19', '17.50', '27.50', 'Modelo19'),
+('2', 'Tipo2', 'Marca2', '15.00', '25.00', 'Modelo2'),
+('20', 'Tipo20', 'Marca20', '19.50', '29.50', 'Modelo20'),
+('3', 'Tipo3', 'Marca3', '12.00', '22.00', 'Modelo3'),
+('4', 'Tipo4', 'Marca4', '18.00', '28.00', 'Modelo4'),
+('5', 'Tipo5', 'Marca5', '14.00', '24.00', 'Modelo5'),
+('6', 'Tipo6', 'Marca6', '16.00', '26.00', 'Modelo6'),
+('7', 'Tipo7', 'Marca7', '11.00', '21.00', 'Modelo7'),
+('8', 'Tipo8', 'Marca8', '13.00', '23.00', 'Modelo8'),
+('9', 'Tipo9', 'Marca9', '17.00', '27.00', 'Modelo9'),
+('APUROLATOR-ACEITE', 'Aceite', 'Apurolator', '5.00', '20.00', 'F-50, Hilux, Runner'),
+('BOSCH-AIRE', 'Aire', 'BOSCH', '10.00', '20.00', 'Aveo, Fiesta, Optra');
 
 -- --------------------------------------------------------
 
@@ -145,10 +178,30 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idCategoria`, `idProducto`, `stock_min`, `stock_max`, `stock_actual`) VALUES
-('A', 'CA10W40', 12, 56, 10),
+('A', 'CA10W40', 12, 56, 6),
 ('A', 'CHR10W20', 12, 36, 4),
-('A', 'GUL20W50', 12, 40, 13),
+('A', 'GUL20W50', 12, 40, 11),
 ('A', 'SHE20W50', 12, 60, 50),
+('F', '1', 12, 24, 8),
+('F', '10', 12, 33, 53),
+('F', '11', 12, 34, 58),
+('F', '12', 12, 35, 63),
+('F', '13', 12, 36, 68),
+('F', '14', 12, 37, 73),
+('F', '15', 12, 38, 78),
+('F', '16', 12, 39, 83),
+('F', '17', 12, 40, 88),
+('F', '18', 12, 41, 93),
+('F', '19', 12, 42, 98),
+('F', '2', 12, 25, 13),
+('F', '20', 12, 43, 103),
+('F', '3', 12, 26, 18),
+('F', '4', 12, 27, 23),
+('F', '5', 12, 28, 28),
+('F', '6', 12, 29, 33),
+('F', '7', 12, 30, 38),
+('F', '8', 12, 31, 43),
+('F', '9', 12, 32, 48),
 ('F', 'APUROLATOR-ACEITE', 12, 24, 8),
 ('F', 'BOSCH-AIRE', 12, 25, 13);
 
@@ -171,7 +224,7 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`idPedido`, `idCliente`, `monto`, `abono`, `fecha`) VALUES
-('P-00000001', '7653463737', '390.00', '100.00', '2023-12-08');
+('P-00000001', '7653463737', '390.00', '110.00', '2023-12-08');
 
 -- --------------------------------------------------------
 
@@ -201,6 +254,12 @@ INSERT INTO `washservice` (`id`, `idPedido`, `placa`, `fecha`, `tipoServicio`, `
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `abonos`
+--
+ALTER TABLE `abonos`
+  ADD PRIMARY KEY (`id`,`idPedido`);
 
 --
 -- Indices de la tabla `aceites`
@@ -249,6 +308,12 @@ ALTER TABLE `washservice`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `abonos`
+--
+ALTER TABLE `abonos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `washservice`
 --
 ALTER TABLE `washservice`
@@ -258,86 +323,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-SELECT 
-  i.idProducto, 
-  i.stock_min, 
-  i.stock_max, 
-  i.stock_actual, 
-  f.marca, 
-  f.tipo, 
-  f.precioCompra,
-  f.precioVenta,
-  f.modelo_vehiculo
-FROM inventario i
-INNER JOIN filtros f ON i.idProducto = f.idProducto
-WHERE i.idCategoria = 'F';
-
-SELECT 
-  i.idProducto, 
-  i.stock_min, 
-  i.stock_max, 
-  i.stock_actual, 
-  a.marca, 
-  a.tipo,
-  a.viscosidad, 
-  a.unidad_por_empaque,
-  a.precio_compra_unidad,
-  a.precio_compra_empaque,
-  a.precio_venta_unidad,
-  a.precio_venta_empaque
-FROM inventario i
-INNER JOIN aceites a ON i.idProducto = a.idProducto
-WHERE i.idCategoria = 'A';
-
-SELECT * FROM washservice WHERE tipoServicio = 'Completo';
-
-SELECT * FROM washservice WHERE tipoServicio = 'Básico';
-
-SELECT idPedido, nombre, apellido, monto, abono, fecha FROM pedido INNER JOIN cliente ON pedido.idCliente = cliente.idCliente;
-
-INSERT INTO filtros (idProducto, marca, tipo, precioCompra, precioVenta, modelo_vehiculo)
-VALUES (1, 'Marca1', 'Tipo1', 10.00, 20.00, 'Modelo1'),
-     (2, 'Marca2', 'Tipo2', 15.00, 25.00, 'Modelo2'),
-     (3, 'Marca3', 'Tipo3', 12.00, 22.00, 'Modelo3'),
-     (4, 'Marca4', 'Tipo4', 18.00, 28.00, 'Modelo4'),
-     (5, 'Marca5', 'Tipo5', 14.00, 24.00, 'Modelo5'),
-     (6, 'Marca6', 'Tipo6', 16.00, 26.00, 'Modelo6'),
-     (7, 'Marca7', 'Tipo7', 11.00, 21.00, 'Modelo7'),
-     (8, 'Marca8', 'Tipo8', 13.00, 23.00, 'Modelo8'),
-     (9, 'Marca9', 'Tipo9', 17.00, 27.00, 'Modelo9'),
-     (10, 'Marca10', 'Tipo10', 19.00, 29.00, 'Modelo10'),
-     (11, 'Marca11', 'Tipo11', 10.50, 20.50, 'Modelo11'),
-     (12, 'Marca12', 'Tipo12', 15.50, 25.50, 'Modelo12'),
-     (13, 'Marca13', 'Tipo13', 12.50, 22.50, 'Modelo13'),
-     (14, 'Marca14', 'Tipo14', 18.50, 28.50, 'Modelo14'),
-     (15, 'Marca15', 'Tipo15', 14.50, 24.50, 'Modelo15'),
-     (16, 'Marca16', 'Tipo16', 16.50, 26.50, 'Modelo16'),
-     (17, 'Marca17', 'Tipo17', 11.50, 21.50, 'Modelo17'),
-     (18, 'Marca18', 'Tipo18', 13.50, 23.50, 'Modelo18'),
-     (19, 'Marca19', 'Tipo19', 17.50, 27.50, 'Modelo19'),
-     (20, 'Marca20', 'Tipo20', 19.50, 29.50, 'Modelo20');
-
-INSERT INTO inventario (idCategoria, idProducto, stock_min, stock_max, stock_actual)
-VALUES ('F', 1, 12, 24, 8),
-     ('F', 2, 12, 25, 13),
-     ('F', 3, 12, 26, 18),
-     ('F', 4, 12, 27, 23),
-     ('F', 5, 12, 28, 28),
-     ('F', 6, 12, 29, 33),
-     ('F', 7, 12, 30, 38),
-     ('F', 8, 12, 31, 43),
-     ('F', 9, 12, 32, 48),
-     ('F', 10, 12, 33, 53),
-     ('F', 11, 12, 34, 58),
-     ('F', 12, 12, 35, 63),
-     ('F', 13, 12, 36, 68),
-     ('F', 14, 12, 37, 73),
-     ('F', 15, 12, 38, 78),
-     ('F', 16, 12, 39, 83),
-     ('F', 17, 12, 40, 88),
-     ('F', 18, 12, 41, 93),
-     ('F', 19, 12, 42, 98),
-     ('F', 20, 12, 43, 103);
-
