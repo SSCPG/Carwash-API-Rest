@@ -8,10 +8,14 @@ export const createPedido = async (req, res) => {
   const idPedido = await service.getNewIdPedido()
   encabezadoPedido.idPedido = idPedido
 
-  console.log(allAceites, 'Desde el controlador')
-
+  console.log(encabezadoPedido.abono, 'Desde el controlador')
   try {
     await service.createEncabezadoPedido(encabezadoPedido)
+
+    if (encabezadoPedido.abono > 0) {
+      console.log('entro al if')
+      await service.createAbono(idPedido, encabezadoPedido.abono, encabezadoPedido.fecha)
+    }
 
     const newCuerpoPedido = cuerpoPedidoFormat({ allAceites, allNewFilters, idPedido })
     const newWashService = washServiceFormat(allService, encabezadoPedido)
@@ -72,6 +76,7 @@ export const getDescripcionPedidoById = async (req, res) => {
     const [ventas] = await service.getDescripcionPedidoById(id)
     const [washService] = await service.getWashServiceById(id)
     const [pedido] = await service.getPedidoById(id)
+    const abonos = await service.getAbonoById(id)
     const result = {
       pedido,
       washService,
@@ -79,6 +84,13 @@ export const getDescripcionPedidoById = async (req, res) => {
         return {
           ...venta,
           idCategoria: venta.idCategoria === 'A' ? 'Aceite' : 'Filtro'
+        }
+      }),
+      abonos: abonos.map((abono) => {
+        return {
+          ...abono,
+          fecha: fechaFormat(abono.fecha),
+          monto: parseFloat(abono.monto).toFixed(2)
         }
       })
     }
@@ -100,6 +112,19 @@ export const getDescripcionPedidoById = async (req, res) => {
         data: result
       })
     }
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+export const createNewAbono = async (req, res) => {
+  const { idPedido, abono, fecha } = req.body
+  console.log(idPedido, abono, fecha)
+  try {
+    await service.createAbono(idPedido, abono, fecha)
+    console.log('Abono creado correctamente')
+    await service.updateAbono(idPedido)
+    res.json({ message: 'Abono creado correctamente' })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

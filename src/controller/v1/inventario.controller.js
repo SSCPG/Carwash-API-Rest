@@ -126,7 +126,6 @@ export const getAllAceites = async (req, res) => {
 export const getAllIdAceites = async (req, res) => {
   try {
     const aceites = await service.getAllAceites()
-    console.log(aceites)
     if (aceites.length === 0) {
       return res.send({
         status: 200,
@@ -247,7 +246,6 @@ export const updateFiltro = async (req, res) => {
 }
 
 export const updateAceite = async (req, res) => {
-  console.log(req.body)
   try {
     const { stockMin, stockMax, stockActual, marca, tipo, viscosidad, unidadPorEmpaque, precioCompraEmpaque, precioVentaEmpaque, precioVentaUnidad } = req.body
     const aceite = {

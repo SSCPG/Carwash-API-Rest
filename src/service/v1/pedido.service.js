@@ -61,6 +61,25 @@ const getPedidoById = async (id) => {
   return data
 }
 
+const createAbono = async (idPedido, abono, fecha) => {
+  try {
+    const [data] = await pool.query('INSERT INTO abonos (idPedido, monto, fecha) VALUES (?, ? , ?);', [idPedido, abono, fecha])
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const updateAbono = async (idPedido) => {
+  const [data] = await pool.query('UPDATE pedido SET abono = (SELECT SUM(monto) FROM abonos WHERE idPedido = ?) WHERE idPedido = ?;', [idPedido, idPedido])
+  return data
+}
+
+const getAbonoById = async (idPedido) => {
+  const [data] = await pool.query('SELECT monto, fecha FROM `abonos` WHERE idPedido = ? ORDER BY `abonos`.`fecha` DESC ', [idPedido])
+  return data
+}
+
 export default {
   createEncabezadoPedido,
   getNewIdPedido,
@@ -70,6 +89,8 @@ export default {
   getEncabezadoPedido,
   getDescripcionPedidoById,
   getWashServiceById,
-  getPedidoById
-
+  getPedidoById,
+  createAbono,
+  updateAbono,
+  getAbonoById
 }
